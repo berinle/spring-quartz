@@ -1,0 +1,11 @@
+<web-app>
+	<servlet>
+		<servlet-name>spring-quartz</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+	</servlet>	
+	<servlet-mapping>
+		<servlet-name>spring-quartz</servlet-name>
+		<url-pattern>/spring/*</url-pattern>
+	</servlet-mapping>
+</web-app>	

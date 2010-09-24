@@ -1,0 +1,25 @@
+apply plugin: 'war'
+apply plugin: 'idea'
+apply plugin: 'jetty'
+
+version = 1.0
+
+group = "com.berinle.sq"
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	compile 'org.springframework:spring-webmvc:3.0.4.RELEASE'
+  compile 'log4j:log4j:1.2.13'
+  compile 'org.opensymphony.quartz:quartz:1.6.1'
+  compile 'org.springframework:spring-context-support:3.0.4.RELEASE'
+  runtime 'commons-collections:commons-collections:3.2'
+  runtime 'org.springframework:spring-tx:3.0.4.RELEASE'
+}
+
+task init << {
+	sourceSets.all*.java.srcDirs*.each { it.mkdirs() }
+	sourceSets.all*.resources.srcDirs*.each { it.mkdirs() }
+}
