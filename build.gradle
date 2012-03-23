@@ -1,6 +1,7 @@
 apply plugin: 'war'
 apply plugin: 'idea'
 apply plugin: 'jetty'
+apply plugin:'application'
 
 version = 1.0
 
@@ -9,6 +10,8 @@ group = "com.berinle.sq"
 repositories {
 	mavenCentral()
 }
+
+mainClassName = "com.berinle.sq.Main"
 
 dependencies {
 	compile 'org.springframework:spring-webmvc:3.0.4.RELEASE'
@@ -22,4 +25,8 @@ dependencies {
 task init << {
 	sourceSets.all*.java.srcDirs*.each { it.mkdirs() }
 	sourceSets.all*.resources.srcDirs*.each { it.mkdirs() }
+}
+
+task wrap(type:Wrapper, description:"create a gradlew") {
+    gradleVersion = '1.0-milestone-9'
 }
