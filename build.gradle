@@ -21,6 +21,7 @@ dependencies {
   compile 'org.springframework:spring-context-support:3.0.4.RELEASE'
   runtime 'commons-collections:commons-collections:3.2'
   runtime 'org.springframework:spring-tx:3.0.4.RELEASE'
+    runtime 'net.jawr:jawr:3.3.3'
 }
 
 task init << {
@@ -29,5 +30,5 @@ task init << {
 }
 
 task wrap(type:Wrapper, description:"create a gradlew") {
-    gradleVersion = '1.0-milestone-9'
+    gradleVersion = '1.0'
 }
