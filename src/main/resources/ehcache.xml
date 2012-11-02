@@ -1,2 +1,19 @@
-<cache>
-</cache>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
+         updateCheck="true"
+         monitoring="autodetect"
+         dynamicConfig="true"
+         maxBytesLocalHeap="5m">
+
+    <cache
+            name="sampleCache"
+            eternal="false"
+            timeToIdleSeconds="300"
+            timeToLiveSeconds="600"
+            overflowToDisk="false">
+
+    </cache>
+
+
+
+</ehcache>
