@@ -2,3 +2,6 @@
 build/
 out/
 spring-quartz.*
+.idea/
+.gradletasknamecache
+Test Results*

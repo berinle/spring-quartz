@@ -6,7 +6,7 @@
          maxBytesLocalHeap="5m">
 
     <cache
-            name="sampleCache"
+            name="persons"
             eternal="false"
             timeToIdleSeconds="300"
             timeToLiveSeconds="600"
