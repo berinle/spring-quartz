@@ -2,17 +2,37 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cache="http://www.springframework.org/schema/cache"
        xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
+        >
 
     <context:component-scan base-package="com.berinle.sq"/>
     <cache:annotation-driven/>
 
-    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
-        <property name="cacheManager" ref="ehcache"/>
-    </bean>
+    <beans profile="default">
+        <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager" p:cacheManager-ref="ehcache"/>
+        <bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" p:configLocation="classpath:ehcache.xml"/>
+    </beans>
 
-    <bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
-        <property name="configLocation" value="classpath:ehcache.xml"/>
-    </bean>
+    <beans profile="stats">
+        <bean id="managementService" class="net.sf.ehcache.management.ManagementService" init-method="init" destroy-method="dispose">
+            <constructor-arg index="0" ref="placeholderCache"/>
+            <constructor-arg index="1" ref="mbeanServer"/>
+            <constructor-arg index="2" value="true"/>
+            <constructor-arg index="3" value="true"/>
+            <constructor-arg index="4" value="true"/>
+            <constructor-arg index="5" value="true"/>
+        </bean>
+
+        <bean id="mbeanServer" class="org.springframework.jmx.support.MBeanServerFactoryBean" p:locateExistingServerIfPossible="true"/>
+
+        <bean id="placeholderCache" class="net.sf.ehcache.CacheManager"/>
+        <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager" p:cacheManager-ref="ehcache" init-method="getCacheManager"/>
+        <bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" p:configLocation="classpath:ehcache.xml"/>
+
+        <!--<bean id="jmxCacheManager" class="net.sf.ehcache.CacheManager">-->
+            <!--<constructor-arg name="configurationURL" value="classpath:ehcache.xml"/>-->
+        <!--</bean>-->
+    </beans>
 
 </beans>
